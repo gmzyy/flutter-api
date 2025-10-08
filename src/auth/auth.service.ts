@@ -20,9 +20,15 @@ export class AuthService {
     return user;
   }
 
+  // async login(email: string, password: string) {
+  //   const user = await this.validateUser(email, password);
+  //   const payload = { sub: user.id, email: user.email };
+  //   return { access_token: await this.jwtService.signAsync(payload) };
+  // }
   async login(email: string, password: string) {
     const user = await this.validateUser(email, password);
-    const payload = { sub: user.id, email: user.email };
-    return { access_token: await this.jwtService.signAsync(payload) };
+    // Elimina la contraseña antes de devolver el usuario
+    const { password: _, ...userWithoutPassword } = user;
+    return userWithoutPassword;
   }
 }

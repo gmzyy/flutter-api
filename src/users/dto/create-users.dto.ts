@@ -8,6 +8,8 @@ import {
   MinLength,
   MaxLength,
   Matches,
+  IsArray,
+  ArrayNotEmpty,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -53,4 +55,9 @@ export class CreateUserDto {
   @IsString()
   @Transform(({ value }) => (typeof value === 'string' ? value.trim() : value))
   notification_token?: string | null;
+
+  @IsArray()
+  @ArrayNotEmpty({ message: 'El usuario debe tener al menos un rol' })
+  @IsString({ each: true, message: 'Cada rol debe ser una cadena de texto' })
+  roles: string[];
 }
